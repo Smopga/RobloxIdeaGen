@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Idea Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e2231a;
+    --red-dark: #b51a12;
+    --red-glow: rgba(226,35,26,0.35);
+    --yellow: #ffe066;
+    --bg: #0d0d0d;
+    --card: #161616;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #888;
+    --green: #3ddc84;
+    --blue: #4da6ff;
+    --purple: #b57bee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 16px 60px;
+    background-image:
+      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(226,35,26,0.18) 0%, transparent 70%),
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeDown .6s ease both;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .logo-icon {
+    width: 52px; height: 52px;
+    background: var(--red);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 0 24px var(--red-glow);
+    flex-shrink: 0;
+  }
+  h1 {
+    font-family: 'Boogaloo', cursive;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 0 30px var(--red-glow);
+    line-height: 1;
+  }
+  h1 span { color: var(--red); }
+  .subtitle {
+    font-size: .95rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+
+  /* ── MAIN CARD ── */
+  .card {
+    width: 100%;
+    max-width: 700px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 48px rgba(0,0,0,.5);
+    animation: fadeUp .6s .15s ease both;
+  }
+
+  /* ── RESULT PANEL ── */
+  .result-panel {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    background: #111;
+  }
+  .result-panel-header {
+    background: #1a1a1a;
+    border-bottom: 1px solid var(--border);
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .dot { width:10px; height:10px; border-radius:50%; }
+  .dot-r { background:#ff5f57; }
+  .dot-y { background:#ffbd2e; }
+  .dot-g { background:#28c840; }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .result-field {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+  }
+  .result-field:nth-child(2n) { border-right: none; }
+  .result-field:nth-last-child(-n+2) { border-bottom: none; }
+  .result-field.full {
+    grid-column: 1 / -1;
+    border-right: none;
+  }
+
+  .field-label {
+    font-size: .7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .field-value {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--text);
+    min-height: 22px;
+    line-height: 1.5;
+  }
+  .field-value.placeholder { color: #333; font-weight: 600; font-style: italic; }
+
+  /* Size badge */
+  .size-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .85rem;
+    font-weight: 800;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+  .size-badge.small  { background: rgba(61,220,132,.15); color: var(--green); border:1px solid rgba(61,220,132,.3); }
+  .size-badge.medium { background: rgba(77,166,255,.15); color: var(--blue);  border:1px solid rgba(77,166,255,.3); }
+  .size-badge.big    { background: rgba(181,123,238,.15); color: var(--purple);border:1px solid rgba(181,123,238,.3); }
+
+  /* ── CONTROLS ── */
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* Size selector */
+  .size-selector {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
+  }
+  .size-btn {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-size: .85rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all .2s;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+  .size-btn:hover { border-color: #444; color: var(--text); }
+  .size-btn.active.small  { border-color: var(--green);  color: var(--green);  background: rgba(61,220,132,.08); }
+  .size-btn.active.medium { border-color: var(--blue);   color: var(--blue);   background: rgba(77,166,255,.08); }
+  .size-btn.active.big    { border-color: var(--purple);  color: var(--purple); background: rgba(181,123,238,.08); }
+
+  /* Generate button */
+  .btn-generate {
+    flex: 1;
+    min-width: 160px;
+    padding: 12px 28px;
+    background: var(--red);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-family: 'Boogaloo', cursive;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all .2s;
+    box-shadow: 0 4px 20px var(--red-glow);
+  }
+  .btn-generate:hover:not(:disabled) {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px var(--red-glow);
+  }
+  .btn-generate:active:not(:disabled) { transform: translateY(0); }
+  .btn-generate:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+  /* Loading spinner */
+  .spinner {
+    width: 18px; height: 18px;
+    border: 2.5px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+  }
+
+  /* Typing animation */
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .cursor {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: var(--red);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink .8s ease infinite;
+  }
+
+  /* History */
+  .history-section {
+    margin-top: 28px;
+    animation: fadeUp .4s ease both;
+  }
+  .history-title {
+    font-size: .75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .history-list { display: flex; flex-direction: column; gap: 8px; }
+  .history-item {
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    font-size: .88rem;
+  }
+  .history-item:hover { border-color: #444; background: #161616; }
+  .history-item-name { font-weight: 800; color: var(--text); }
+  .history-item-meta { color: var(--muted); font-size: .78rem; }
+
+  @keyframes fadeDown { from { opacity:0; transform: translateY(-16px); } to { opacity:1; transform: none; } }
+  @keyframes fadeUp   { from { opacity:0; transform: translateY(16px); }  to { opacity:1; transform: none; } }
+  @keyframes spin     { to { transform: rotate(360deg); } }
+
+  /* field reveal animation */
+  .field-value.animating { animation: revealText .3s ease; }
+  @keyframes revealText { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
+
+  @media (max-width: 520px) {
+    .result-grid { grid-template-columns: 1fr; }
+    .result-field { border-right: none !important; }
+    .result-field:last-child { border-bottom: none; }
+    .result-field.full { grid-column: 1; }
+    .controls { flex-direction: column; }
+    .size-selector, .btn-generate { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo-row">
+    <div class="logo-icon">🎮</div>
+    <h1>Roblox <span>Idea</span> Generator</h1>
+  </div>
+  <p class="subtitle">Powered by AI — Build your next hit game</p>
+</div>
+
+<div class="card">
+
+  <!-- Result Panel -->
+  <div class="result-panel">
+    <div class="result-panel-header">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+    </div>
+    <div class="result-grid">
+      <div class="result-field">
+        <div class="field-label">Name</div>
+        <div class="field-value placeholder" id="f-name">— — —</div>
+      </div>
+      <div class="result-field">
+        <div class="field-label">Genre</div>
+        <div class="field-value placeholder" id="f-genre">— — —</div>
+      </div>
+      <div class="result-field">
+        <div class="field-label">Subgenre</div>
+        <div class="field-value placeholder" id="f-subgenre">— — —</div>
+      </div>
+      <div class="result-field">
+        <div class="field-label">Size of the Project</div>
+        <div class="field-value placeholder" id="f-size">— — —</div>
+      </div>
+      <div class="result-field full">
+        <div class="field-label">Description</div>
+        <div class="field-value placeholder" id="f-desc">Hit <strong>Generate</strong> to create your first Roblox game idea!</div>
+      </div>
+      <div class="result-field full">
+        <div class="field-label">Idea</div>
+        <div class="field-value placeholder" id="f-idea">Your unique game concept will appear here...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="size-selector">
+      <button class="size-btn active small" data-size="small" onclick="setSize('small')">Small</button>
+      <button class="size-btn medium" data-size="medium" onclick="setSize('medium')">Medium</button>
+      <button class="size-btn big" data-size="big" onclick="setSize('big')">Big</button>
+    </div>
+    <button class="btn-generate" id="btn-gen" onclick="generate()">
+      <span>⚡</span> Generate
+    </button>
+  </div>
+
+  <!-- History -->
+  <div class="history-section" id="history-section" style="display:none">
+    <div class="history-title">Previous Ideas</div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+</div>
+
+<script>
+  let selectedSize = 'small';
+  let history = [];
+  let isLoading = false;
+
+  function setSize(size) {
+    selectedSize = size;
+    document.querySelectorAll('.size-btn').forEach(b => {
+      b.classList.remove('active', 'small', 'medium', 'big');
+    });
+    const btn = document.querySelector(`[data-size="${size}"]`);
+    btn.classList.add('active', size);
+  }
+
+  function setField(id, value, isPlaceholder = false) {
+    const el = document.getElementById(id);
+    el.className = 'field-value' + (isPlaceholder ? ' placeholder' : ' animating');
+    el.innerHTML = value;
+  }
+
+  function makeSizeBadge(size) {
+    const label = size.charAt(0).toUpperCase() + size.slice(1);
+    return `<span class="size-badge ${size}">${label === 'Big' ? '🏰' : label === 'Medium' ? '🏗️' : '🧩'} ${label}</span>`;
+  }
+
+  async function generate() {
+    if (isLoading) return;
+    isLoading = true;
+
+    const btn = document.getElementById('btn-gen');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div> Generating…';
+
+    // Clear fields
+    ['f-name','f-genre','f-subgenre','f-desc','f-idea'].forEach(id =>
+      setField(id, '<span class="cursor"></span>', false)
+    );
+    setField('f-size', '', false);
+
+    const sizePrompt = {
+      small:  'a small, simple solo-dev project (1-2 weeks to make)',
+      medium: 'a medium-sized project (2-4 weeks, small team)',
+      big:    'a large, ambitious project (months of work, full team)'
+    }[selectedSize];
+
+    const prompt = `Generate a creative and unique Roblox game idea for ${sizePrompt}.
+
+Return ONLY valid JSON (no markdown, no explanation) with these exact keys:
+{
+  "name": "Game name (catchy, 2-5 words)",
+  "genre": "Main genre (e.g. Simulator, Obby, RPG, Tycoon, Horror, Fighting, Racing, Survival, Adventure)",
+  "subgenre": "Specific subgenre or style (e.g. Idle Tycoon, Parkour, Open World RPG, Zombie Survival)",
+  "description": "2-3 sentence description of what the game is about and its core mechanic",
+  "idea": "1-2 sentences on the unique twist or selling point that makes this game stand out on Roblox"
+}`;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+
+      const data = await res.json();
+      const raw = data.content.map(b => b.text || '').join('');
+      const clean = raw.replace(/```json|```/g, '').trim();
+      const idea = JSON.parse(clean);
+
+      // Animate in
+      setTimeout(() => setField('f-name', idea.name), 0);
+      setTimeout(() => setField('f-genre', idea.genre), 120);
+      setTimeout(() => setField('f-subgenre', idea.subgenre), 240);
+      setTimeout(() => setField('f-size', makeSizeBadge(selectedSize)), 360);
+      setTimeout(() => setField('f-desc', idea.description), 480);
+      setTimeout(() => setField('f-idea', idea.idea), 600);
+
+      // Add to history
+      history.unshift({ ...idea, size: selectedSize });
+      if (history.length > 5) history.pop();
+      renderHistory();
+
+    } catch (err) {
+      setField('f-name', '⚠️ Error', false);
+      setField('f-desc', 'Could not generate idea. Please try again.', false);
+      ['f-genre','f-subgenre','f-size','f-idea'].forEach(id => setField(id, '—', false));
+      console.error(err);
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '<span>⚡</span> Generate';
+    isLoading = false;
+  }
+
+  function renderHistory() {
+    const section = document.getElementById('history-section');
+    const list = document.getElementById('history-list');
+    if (history.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    list.innerHTML = history.slice(1).map((item, i) => `
+      <div class="history-item" onclick="loadHistory(${i+1})">
+        <div>
+          <div class="history-item-name">${item.name}</div>
+          <div class="history-item-meta">${item.genre} · ${item.subgenre}</div>
+        </div>
+        <span class="size-badge ${item.size}" style="font-size:.75rem;padding:2px 10px;">${item.size.charAt(0).toUpperCase()+item.size.slice(1)}</span>
+      </div>
+    `).join('');
+  }
+
+  function loadHistory(idx) {
+    const item = history[idx];
+    if (!item) return;
+    setField('f-name', item.name);
+    setField('f-genre', item.genre);
+    setField('f-subgenre', item.subgenre);
+    setField('f-size', makeSizeBadge(item.size));
+    setField('f-desc', item.description);
+    setField('f-idea', item.idea);
+  }
+</script>
+</body>
+</html>
