@@ -4,481 +4,472 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roblox Idea Generator</title>
-<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --red: #e2231a;
-    --red-dark: #b51a12;
-    --red-glow: rgba(226,35,26,0.35);
-    --yellow: #ffe066;
-    --bg: #0d0d0d;
-    --card: #161616;
-    --border: #2a2a2a;
-    --text: #f0f0f0;
-    --muted: #888;
-    --green: #3ddc84;
-    --blue: #4da6ff;
-    --purple: #b57bee;
+    --red: #e2231a; --red-dark: #b51a12; --red-glow: rgba(226,35,26,0.3);
+    --bg: #0c0c0c; --card: #141414; --border: #242424; --border2: #1a1a1a;
+    --text: #efefef; --muted: #666; --muted2: #3a3a3a;
+    --green: #3ddc84; --blue: #4da6ff; --orange: #ff8c42; --purple: #b57bee;
   }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 16px 60px;
+    font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+    padding: 48px 16px 80px;
     background-image:
-      radial-gradient(ellipse 80% 40% at 50% -10%, rgba(226,35,26,0.18) 0%, transparent 70%),
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px),
-      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
+      radial-gradient(ellipse 70% 35% at 50% 0%, rgba(226,35,26,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 20% at 80% 100%, rgba(77,166,255,0.05) 0%, transparent 60%);
   }
 
-  /* ── HEADER ── */
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-    animation: fadeDown .6s ease both;
-  }
-  .logo-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    margin-bottom: 6px;
-  }
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 40px; animation: fadeDown .7s cubic-bezier(.22,1,.36,1) both; }
+  .logo-wrap { display: inline-flex; align-items: center; gap: 16px; margin-bottom: 10px; }
   .logo-icon {
-    width: 52px; height: 52px;
-    background: var(--red);
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 0 24px var(--red-glow);
-    flex-shrink: 0;
+    width: 58px; height: 58px;
+    background: linear-gradient(135deg, #e2231a 0%, #ff5a52 100%);
+    border-radius: 16px; display: flex; align-items: center; justify-content: center;
+    font-size: 30px; box-shadow: 0 0 32px var(--red-glow), 0 4px 12px rgba(0,0,0,.4);
+    position: relative;
   }
-  h1 {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    letter-spacing: 1px;
-    color: #fff;
-    text-shadow: 0 0 30px var(--red-glow);
-    line-height: 1;
-  }
-  h1 span { color: var(--red); }
-  .subtitle {
-    font-size: .95rem;
-    color: var(--muted);
-    margin-top: 4px;
-    font-weight: 600;
-    letter-spacing: .5px;
-  }
+  .logo-icon::after { content:''; position:absolute; inset:0; border-radius:16px; border:1px solid rgba(255,255,255,.15); }
+  h1 { font-family:'Boogaloo',cursive; font-size:clamp(2.2rem,7vw,3.6rem); letter-spacing:1.5px; color:#fff; line-height:1; text-shadow:0 2px 40px rgba(226,35,26,0.4); }
+  h1 em { color:var(--red); font-style:normal; }
+  .badge-row { display:flex; justify-content:center; align-items:center; gap:8px; margin-top:10px; flex-wrap:wrap; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 12px; border-radius:20px; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; }
+  .b-free   { background:rgba(61,220,132,.12);  color:var(--green);  border:1px solid rgba(61,220,132,.25); }
+  .b-off    { background:rgba(77,166,255,.12);   color:var(--blue);   border:1px solid rgba(77,166,255,.25); }
+  .b-count  { background:rgba(255,140,66,.12);   color:var(--orange); border:1px solid rgba(255,140,66,.25); }
 
-  /* ── MAIN CARD ── */
+  /* CARD */
   .card {
-    width: 100%;
-    max-width: 700px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 8px 48px rgba(0,0,0,.5);
-    animation: fadeUp .6s .15s ease both;
+    width:100%; max-width:680px; background:var(--card);
+    border:1px solid var(--border); border-radius:22px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03);
+    animation:fadeUp .7s .1s cubic-bezier(.22,1,.36,1) both;
   }
 
-  /* ── RESULT PANEL ── */
-  .result-panel {
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    overflow: hidden;
-    margin-bottom: 28px;
-    background: #111;
+  /* PANEL BAR */
+  .panel-bar {
+    background:#0e0e0e; border-bottom:1px solid var(--border);
+    padding:11px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;
   }
-  .result-panel-header {
-    background: #1a1a1a;
-    border-bottom: 1px solid var(--border);
-    padding: 10px 18px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .dots { display:flex; gap:6px; }
+  .dot { width:11px; height:11px; border-radius:50%; }
+  .dot-r{background:#ff5f57;} .dot-y{background:#febc2e;} .dot-g{background:#28c840;}
+  .panel-label { font-size:.65rem; font-weight:800; text-transform:uppercase; letter-spacing:2px; color:#333; }
+  .copy-btn {
+    background:none; border:1px solid var(--border); border-radius:6px;
+    color:var(--muted); font-family:'Nunito',sans-serif; font-size:.7rem; font-weight:800;
+    padding:3px 10px; cursor:pointer; transition:all .2s; letter-spacing:.5px;
   }
-  .dot { width:10px; height:10px; border-radius:50%; }
-  .dot-r { background:#ff5f57; }
-  .dot-y { background:#ffbd2e; }
-  .dot-g { background:#28c840; }
+  .copy-btn:hover { border-color:#444; color:var(--text); }
+  .copy-btn.copied { border-color:var(--green); color:var(--green); }
 
-  .result-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-  }
-  .result-field {
-    padding: 14px 18px;
-    border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-  }
-  .result-field:nth-child(2n) { border-right: none; }
-  .result-field:nth-last-child(-n+2) { border-bottom: none; }
-  .result-field.full {
-    grid-column: 1 / -1;
-    border-right: none;
-  }
+  /* RESULT GRID */
+  .result-grid { display:grid; grid-template-columns:1fr 1fr; }
+  .result-field { padding:16px 20px; border-bottom:1px solid var(--border2); border-right:1px solid var(--border2); }
+  .result-field:nth-child(2n) { border-right:none; }
+  .result-field.full { grid-column:1/-1; border-right:none; }
+  .result-field:last-child { border-bottom:none; }
+  .fl { font-size:.63rem; font-weight:800; text-transform:uppercase; letter-spacing:1.8px; color:#333; margin-bottom:6px; }
+  .fv { font-size:.92rem; font-weight:700; color:var(--text); min-height:22px; line-height:1.55; }
+  .fv.dim { color:#2e2e2e; font-style:italic; font-weight:600; }
+  .sz { display:inline-flex; align-items:center; gap:5px; font-size:.78rem; font-weight:800; padding:2px 12px; border-radius:20px; }
+  .sz.small  { background:rgba(61,220,132,.12);  color:var(--green);  border:1px solid rgba(61,220,132,.25); }
+  .sz.medium { background:rgba(77,166,255,.12);   color:var(--blue);   border:1px solid rgba(77,166,255,.25); }
+  .sz.big    { background:rgba(181,123,238,.12);  color:var(--purple); border:1px solid rgba(181,123,238,.25);}
 
-  .field-label {
-    font-size: .7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-    margin-bottom: 5px;
+  /* CONTROLS */
+  .controls { padding:20px; border-top:1px solid var(--border); display:flex; gap:12px; align-items:stretch; flex-wrap:wrap; }
+  .size-group {
+    flex:1; min-width:180px; display:flex; gap:6px;
+    background:#0e0e0e; padding:5px; border-radius:12px; border:1px solid var(--border);
   }
-  .field-value {
-    font-size: .95rem;
-    font-weight: 700;
-    color: var(--text);
-    min-height: 22px;
-    line-height: 1.5;
+  .sz-btn {
+    flex:1; padding:9px 0; background:none; border:none; border-radius:8px;
+    color:var(--muted); font-family:'Nunito',sans-serif; font-size:.78rem; font-weight:800;
+    cursor:pointer; transition:all .18s; text-transform:uppercase; letter-spacing:.5px;
   }
-  .field-value.placeholder { color: #333; font-weight: 600; font-style: italic; }
+  .sz-btn:hover { color:var(--text); background:rgba(255,255,255,.04); }
+  .sz-btn.active.small  { color:var(--green);  background:rgba(61,220,132,.12); }
+  .sz-btn.active.medium { color:var(--blue);   background:rgba(77,166,255,.12); }
+  .sz-btn.active.big    { color:var(--purple); background:rgba(181,123,238,.12);}
+  .btn-gen {
+    flex:1; min-width:150px; height:48px; padding:0 28px;
+    background:linear-gradient(135deg,#e2231a 0%,#c41c14 100%);
+    border:none; border-radius:12px; color:#fff; font-family:'Boogaloo',cursive;
+    font-size:1.25rem; letter-spacing:1.5px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition:all .2s; box-shadow:0 4px 20px rgba(226,35,26,.35), inset 0 1px 0 rgba(255,255,255,.15);
+    position:relative; overflow:hidden;
+  }
+  .btn-gen::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,transparent 60%); border-radius:12px; }
+  .btn-gen:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(226,35,26,.45); }
+  .btn-gen:active { transform:translateY(0); }
 
-  /* Size badge */
-  .size-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: .85rem;
-    font-weight: 800;
-    padding: 3px 12px;
-    border-radius: 20px;
-  }
-  .size-badge.small  { background: rgba(61,220,132,.15); color: var(--green); border:1px solid rgba(61,220,132,.3); }
-  .size-badge.medium { background: rgba(77,166,255,.15); color: var(--blue);  border:1px solid rgba(77,166,255,.3); }
-  .size-badge.big    { background: rgba(181,123,238,.15); color: var(--purple);border:1px solid rgba(181,123,238,.3); }
+  /* ROLL ANIMATION */
+  @keyframes roll { 0%{transform:translateY(-12px);opacity:0} 60%{transform:translateY(3px);opacity:1} 100%{transform:translateY(0);opacity:1} }
+  .fv.rolled { animation:roll .32s cubic-bezier(.22,1,.36,1) both; }
 
-  /* ── CONTROLS ── */
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
+  /* HISTORY */
+  .history-wrap { padding:0 20px 20px; border-top:1px solid var(--border2); }
+  .history-label { font-size:.63rem; font-weight:800; text-transform:uppercase; letter-spacing:1.8px; color:#333; padding:16px 0 10px; }
+  .history-list { display:flex; flex-direction:column; gap:6px; }
+  .h-item {
+    background:#0e0e0e; border:1px solid var(--border2); border-radius:10px;
+    padding:10px 14px; display:flex; align-items:center; justify-content:space-between;
+    gap:10px; cursor:pointer; transition:border-color .18s, background .18s;
   }
+  .h-item:hover { border-color:var(--border); background:#111; }
+  .h-name { font-weight:800; font-size:.85rem; }
+  .h-meta { font-size:.72rem; color:var(--muted); margin-top:1px; }
 
-  /* Size selector */
-  .size-selector {
-    display: flex;
-    gap: 8px;
-    flex: 1;
-    min-width: 200px;
-  }
-  .size-btn {
-    flex: 1;
-    padding: 10px 0;
-    border-radius: 10px;
-    border: 1.5px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    font-family: 'Nunito', sans-serif;
-    font-size: .85rem;
-    font-weight: 800;
-    cursor: pointer;
-    transition: all .2s;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-  }
-  .size-btn:hover { border-color: #444; color: var(--text); }
-  .size-btn.active.small  { border-color: var(--green);  color: var(--green);  background: rgba(61,220,132,.08); }
-  .size-btn.active.medium { border-color: var(--blue);   color: var(--blue);   background: rgba(77,166,255,.08); }
-  .size-btn.active.big    { border-color: var(--purple);  color: var(--purple); background: rgba(181,123,238,.08); }
+  .counter { margin-top:18px; text-align:center; font-size:.75rem; color:#2a2a2a; font-weight:700; letter-spacing:.5px; animation:fadeUp .7s .3s both; }
+  .counter span { color:var(--red); }
 
-  /* Generate button */
-  .btn-generate {
-    flex: 1;
-    min-width: 160px;
-    padding: 12px 28px;
-    background: var(--red);
-    border: none;
-    border-radius: 12px;
-    color: #fff;
-    font-family: 'Boogaloo', cursive;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all .2s;
-    box-shadow: 0 4px 20px var(--red-glow);
-  }
-  .btn-generate:hover:not(:disabled) {
-    background: var(--red-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 28px var(--red-glow);
-  }
-  .btn-generate:active:not(:disabled) { transform: translateY(0); }
-  .btn-generate:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:none} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:none} }
 
-  /* Loading spinner */
-  .spinner {
-    width: 18px; height: 18px;
-    border: 2.5px solid rgba(255,255,255,.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: spin .7s linear infinite;
-  }
-
-  /* Typing animation */
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  .cursor {
-    display: inline-block;
-    width: 2px; height: 1em;
-    background: var(--red);
-    margin-left: 2px;
-    vertical-align: middle;
-    animation: blink .8s ease infinite;
-  }
-
-  /* History */
-  .history-section {
-    margin-top: 28px;
-    animation: fadeUp .4s ease both;
-  }
-  .history-title {
-    font-size: .75rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-  .history-list { display: flex; flex-direction: column; gap: 8px; }
-  .history-item {
-    background: #111;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    cursor: pointer;
-    transition: border-color .2s, background .2s;
-    font-size: .88rem;
-  }
-  .history-item:hover { border-color: #444; background: #161616; }
-  .history-item-name { font-weight: 800; color: var(--text); }
-  .history-item-meta { color: var(--muted); font-size: .78rem; }
-
-  @keyframes fadeDown { from { opacity:0; transform: translateY(-16px); } to { opacity:1; transform: none; } }
-  @keyframes fadeUp   { from { opacity:0; transform: translateY(16px); }  to { opacity:1; transform: none; } }
-  @keyframes spin     { to { transform: rotate(360deg); } }
-
-  /* field reveal animation */
-  .field-value.animating { animation: revealText .3s ease; }
-  @keyframes revealText { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
-
-  @media (max-width: 520px) {
-    .result-grid { grid-template-columns: 1fr; }
-    .result-field { border-right: none !important; }
-    .result-field:last-child { border-bottom: none; }
-    .result-field.full { grid-column: 1; }
-    .controls { flex-direction: column; }
-    .size-selector, .btn-generate { width: 100%; }
+  @media(max-width:500px){
+    .result-grid{grid-template-columns:1fr;}
+    .result-field{border-right:none!important;}
+    .controls{flex-direction:column;}
+    .btn-gen{width:100%;}
   }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo-row">
+  <div class="logo-wrap">
     <div class="logo-icon">🎮</div>
-    <h1>Roblox <span>Idea</span> Generator</h1>
+    <h1>Roblox <em>Idea</em> Generator</h1>
   </div>
-  <p class="subtitle">Powered by AI — Build your next hit game</p>
+  <div class="badge-row">
+    <span class="badge b-free">✓ Free Forever</span>
+    <span class="badge b-off">⚡ No API Needed</span>
+    <span class="badge b-count" id="combo-count">Loading...</span>
+  </div>
 </div>
 
 <div class="card">
-
-  <!-- Result Panel -->
-  <div class="result-panel">
-    <div class="result-panel-header">
-      <div class="dot dot-r"></div>
-      <div class="dot dot-y"></div>
-      <div class="dot dot-g"></div>
-    </div>
-    <div class="result-grid">
-      <div class="result-field">
-        <div class="field-label">Name</div>
-        <div class="field-value placeholder" id="f-name">— — —</div>
-      </div>
-      <div class="result-field">
-        <div class="field-label">Genre</div>
-        <div class="field-value placeholder" id="f-genre">— — —</div>
-      </div>
-      <div class="result-field">
-        <div class="field-label">Subgenre</div>
-        <div class="field-value placeholder" id="f-subgenre">— — —</div>
-      </div>
-      <div class="result-field">
-        <div class="field-label">Size of the Project</div>
-        <div class="field-value placeholder" id="f-size">— — —</div>
-      </div>
-      <div class="result-field full">
-        <div class="field-label">Description</div>
-        <div class="field-value placeholder" id="f-desc">Hit <strong>Generate</strong> to create your first Roblox game idea!</div>
-      </div>
-      <div class="result-field full">
-        <div class="field-label">Idea</div>
-        <div class="field-value placeholder" id="f-idea">Your unique game concept will appear here...</div>
-      </div>
-    </div>
+  <div class="panel-bar">
+    <div class="dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+    <span class="panel-label">Generated Idea</span>
+    <button class="copy-btn" id="copy-btn" onclick="copyIdea()">Copy</button>
   </div>
-
-  <!-- Controls -->
+  <div class="result-grid">
+    <div class="result-field"><div class="fl">Name</div><div class="fv dim" id="f-name">Hit Generate ⚡</div></div>
+    <div class="result-field"><div class="fl">Genre</div><div class="fv dim" id="f-genre">— — —</div></div>
+    <div class="result-field"><div class="fl">Subgenre</div><div class="fv dim" id="f-subgenre">— — —</div></div>
+    <div class="result-field"><div class="fl">Size of the Project</div><div class="fv dim" id="f-size">— — —</div></div>
+    <div class="result-field full"><div class="fl">Description</div><div class="fv dim" id="f-desc">Your Roblox game description will appear here after generating.</div></div>
+    <div class="result-field full"><div class="fl">Idea</div><div class="fv dim" id="f-idea">The unique concept and selling point of your game will show here.</div></div>
+  </div>
   <div class="controls">
-    <div class="size-selector">
-      <button class="size-btn active small" data-size="small" onclick="setSize('small')">Small</button>
-      <button class="size-btn medium" data-size="medium" onclick="setSize('medium')">Medium</button>
-      <button class="size-btn big" data-size="big" onclick="setSize('big')">Big</button>
+    <div class="size-group">
+      <button class="sz-btn active small"  data-s="small"  onclick="setSize('small')">Small</button>
+      <button class="sz-btn medium"        data-s="medium" onclick="setSize('medium')">Medium</button>
+      <button class="sz-btn big"           data-s="big"    onclick="setSize('big')">Big</button>
     </div>
-    <button class="btn-generate" id="btn-gen" onclick="generate()">
-      <span>⚡</span> Generate
-    </button>
+    <button class="btn-gen" id="btn-gen" onclick="generate()"><span>⚡</span> Generate</button>
   </div>
-
-  <!-- History -->
-  <div class="history-section" id="history-section" style="display:none">
-    <div class="history-title">Previous Ideas</div>
+  <div class="history-wrap" id="history-wrap" style="display:none">
+    <div class="history-label">Previous Ideas</div>
     <div class="history-list" id="history-list"></div>
   </div>
 </div>
 
+<div class="counter" id="counter"></div>
+
 <script>
-  let selectedSize = 'small';
-  let history = [];
-  let isLoading = false;
+const D = {
+  prefix:["Ultra","Mega","Shadow","Neon","Hyper","Turbo","Cosmic","Pixel","Blaze","Storm","Ghost","Iron","Frozen","Ancient","Crystal","Rogue","Void","Solar","Cursed","Electric","Legendary","Eternal","Dark","Hollow","Blazing","Mystic","Toxic","Sky","Deep","Wild","Glitch","Super","Rusty","Hidden","Lost","Shattered","Bio","Infernal","Astral","Nether","Savage","Gilded","Crimson","Silent","Twisted"],
+  core:["Tycoon","Simulator","Quest","Wars","Escape","Obby","World","Realm","Empire","Arena","Factory","Kingdom","Tower","Defense","Runner","Clicker","Dungeon","Survival","Dash","Brawl","Craft","Legends","Rise","Chronicles","Odyssey","Rampage","Showdown","Battleground","Rush","Heist","Mayhem","Paradise","Frontier","Uprising","Conquest","Trials","Saga","Havoc","Invasion","Protocol","Labyrinth","Dominion","Odyssey","Command"],
+  suffix:["X","2","Pro","Zero","Reborn","Unleashed","Origins","Evolved","Xtreme","Beyond","Unlimited","Turbo","Remix","Redux","Rising","Online","Alpha","Plus","Max","Overdrive"],
 
-  function setSize(size) {
-    selectedSize = size;
-    document.querySelectorAll('.size-btn').forEach(b => {
-      b.classList.remove('active', 'small', 'medium', 'big');
-    });
-    const btn = document.querySelector(`[data-size="${size}"]`);
-    btn.classList.add('active', size);
-  }
-
-  function setField(id, value, isPlaceholder = false) {
-    const el = document.getElementById(id);
-    el.className = 'field-value' + (isPlaceholder ? ' placeholder' : ' animating');
-    el.innerHTML = value;
-  }
-
-  function makeSizeBadge(size) {
-    const label = size.charAt(0).toUpperCase() + size.slice(1);
-    return `<span class="size-badge ${size}">${label === 'Big' ? '🏰' : label === 'Medium' ? '🏗️' : '🧩'} ${label}</span>`;
-  }
-
-  async function generate() {
-    if (isLoading) return;
-    isLoading = true;
-
-    const btn = document.getElementById('btn-gen');
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> Generating…';
-
-    // Clear fields
-    ['f-name','f-genre','f-subgenre','f-desc','f-idea'].forEach(id =>
-      setField(id, '<span class="cursor"></span>', false)
-    );
-    setField('f-size', '', false);
-
-    const sizePrompt = {
-      small:  'a small, simple solo-dev project (1-2 weeks to make)',
-      medium: 'a medium-sized project (2-4 weeks, small team)',
-      big:    'a large, ambitious project (months of work, full team)'
-    }[selectedSize];
-
-    const prompt = `Generate a creative and unique Roblox game idea for ${sizePrompt}.
-
-Return ONLY valid JSON (no markdown, no explanation) with these exact keys:
-{
-  "name": "Game name (catchy, 2-5 words)",
-  "genre": "Main genre (e.g. Simulator, Obby, RPG, Tycoon, Horror, Fighting, Racing, Survival, Adventure)",
-  "subgenre": "Specific subgenre or style (e.g. Idle Tycoon, Parkour, Open World RPG, Zombie Survival)",
-  "description": "2-3 sentence description of what the game is about and its core mechanic",
-  "idea": "1-2 sentences on the unique twist or selling point that makes this game stand out on Roblox"
-}`;
-
-    try {
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-
-      const data = await res.json();
-      const raw = data.content.map(b => b.text || '').join('');
-      const clean = raw.replace(/```json|```/g, '').trim();
-      const idea = JSON.parse(clean);
-
-      // Animate in
-      setTimeout(() => setField('f-name', idea.name), 0);
-      setTimeout(() => setField('f-genre', idea.genre), 120);
-      setTimeout(() => setField('f-subgenre', idea.subgenre), 240);
-      setTimeout(() => setField('f-size', makeSizeBadge(selectedSize)), 360);
-      setTimeout(() => setField('f-desc', idea.description), 480);
-      setTimeout(() => setField('f-idea', idea.idea), 600);
-
-      // Add to history
-      history.unshift({ ...idea, size: selectedSize });
-      if (history.length > 5) history.pop();
-      renderHistory();
-
-    } catch (err) {
-      setField('f-name', '⚠️ Error', false);
-      setField('f-desc', 'Could not generate idea. Please try again.', false);
-      ['f-genre','f-subgenre','f-size','f-idea'].forEach(id => setField(id, '—', false));
-      console.error(err);
+  genres:{
+    "Simulator":{
+      subs:["Pet Simulator","Mining Simulator","Farming Simulator","Cooking Simulator","Space Simulator","Driving Simulator","Fishing Simulator","Building Simulator","Superhero Simulator","Fighting Simulator","Eating Simulator","Blob Simulator","Cleaning Simulator","Wizard Simulator"],
+      descs:[
+        "Players grow a business from scratch by collecting resources, upgrading tools, and unlocking new areas. The loop is satisfying and endlessly expandable with seasonal events and leaderboards.",
+        "You start with nothing and gradually build your empire by automating tasks, hiring workers, and purchasing upgrades. Prestige mechanics allow infinite replayability.",
+        "A chill sandbox simulator where players collect items, level up their skills, and compete on global leaderboards for top ranks.",
+        "Everything scales — from your tiny starter tool to a screen-filling mega machine. Each upgrade feels impactful and visually rewarding.",
+        "A relaxing simulator with a surprisingly deep upgrade tree. Players unlock new zones by reaching milestones, each with its own aesthetic and mechanics."
+      ],
+      ideas:[
+        "The twist: your pets have a mood system — unhappy pets don't work, so players must balance productivity with pet care.",
+        "Unique hook: resource chains that players must manage in real time, rewarding clever multi-tasking over raw clicking.",
+        "Standout feature: a social marketplace where players trade rare items they've crafted, driving a player-run economy.",
+        "The gimmick: a prestige system that resets your progress but permanently transforms your character's appearance into something rarer.",
+        "Hook: rebirth mechanics that unlock game-changing passive abilities, making each run play completely differently."
+      ]
+    },
+    "Tycoon":{
+      subs:["Restaurant Tycoon","Hotel Tycoon","Zoo Tycoon","Superhero Tycoon","Prison Tycoon","Military Tycoon","Spaceship Tycoon","Bank Tycoon","Theme Park Tycoon","School Tycoon","Candy Factory Tycoon","Zombie Tycoon","Ocean Tycoon"],
+      descs:[
+        "Build and manage your own business empire by purchasing upgrades, hiring staff, and expanding your facility. Compete with friends on the same server for the biggest empire.",
+        "Start from a small plot and construct a massive money-printing machine using a chain of automated droppers and collectors.",
+        "A competitive tycoon where sabotaging rival players' buildings is just as important as building your own.",
+        "Every dollar you earn can be reinvested into bigger, flashier infrastructure. The visual transformation of your base as you grow is the main reward.",
+        "Players race to hit revenue milestones first. The first to reach each milestone unlocks a powerful permanent perk no one else can get."
+      ],
+      ideas:[
+        "The hook: rival players can raid your tycoon at any time, forcing you to invest in defenses as well as production.",
+        "Twist: your tycoon's visual style evolves with your earnings — richer players get flashier, more imposing buildings.",
+        "Unique mechanic: limited-time contracts that reward players who reach specific milestones with rare, exclusive gear.",
+        "Standout: a voting system where the server collectively chooses a global buff every 10 minutes, encouraging player interaction.",
+        "Hook: a black market system where spending illegally boosts income but risks a server-wide raid event."
+      ]
+    },
+    "Obby":{
+      subs:["Escape Obby","Tower of Hell Style","Story Obby","Competitive Obby","Dropper Obby","Parkour Obby","Horror Obby","Colour Obby","Mega Obby","Sky Obby","Underwater Obby","Lava Obby","Invisible Obby"],
+      descs:[
+        "A precision platformer filled with hundreds of increasingly difficult stages. Each world has a unique visual theme and mechanic that keeps gameplay fresh.",
+        "Players race through obstacle courses while competing against others in real time. Gravity flips, moving platforms, and invisible floors keep everyone on edge.",
+        "A narrative-driven obstacle course where completing stages unlocks pieces of a dark, mysterious story.",
+        "Every 10 stages introduces a new twist — reversed gravity, zero friction, shrinking platforms — keeping even veteran obbyers surprised.",
+        "A colossal obby with over 500 stages. The difficulty ramps gradually but brutally, and finishing it earns a legendary badge."
+      ],
+      ideas:[
+        "The twist: the course slowly crumbles behind you, so you can never go back — only forward.",
+        "Unique angle: a community-built obby where players submit their own stages, voted in by the community each week.",
+        "Hook: completing stages rewards cosmetic items that visually transform your character into different forms.",
+        "Gimmick: a co-op obby where some obstacles require two players to cooperate — stepping on switches simultaneously to open gates.",
+        "Standout: a replay system that shows ghost outlines of your previous attempts, letting you race against yourself."
+      ]
+    },
+    "RPG":{
+      subs:["Fantasy RPG","Sci-Fi RPG","Anime RPG","Open World RPG","Dungeon RPG","Class-Based RPG","Monster Hunter RPG","Story RPG","Dark Fantasy RPG","Pixel RPG","Mythology RPG"],
+      descs:[
+        "An open-world RPG where players choose a class, grind enemies, and complete quests across a vast handcrafted map with multiple biomes and dungeons.",
+        "Players build a custom character, acquire powerful skills, and team up with others to take down massive world bosses that appear every hour.",
+        "A story-rich RPG with branching dialogue, moral choices, and multiple endings depending on how players treat the world around them.",
+        "A fast-paced action RPG where combos and skill timing matter more than gear stats. Execution is everything.",
+        "An MMO-lite RPG with guilds, raids, a crafting economy, and seasonal story updates that change the world permanently."
+      ],
+      ideas:[
+        "The standout: a dynamic world where player actions — like deforesting an area or killing a key NPC — permanently change the server's world state.",
+        "Unique hook: a class-switch system that lets players combine two classes into a hybrid, creating hundreds of unique builds.",
+        "Twist: enemies scale to the player's level but also learn from their tactics over time, adapting to counter common strategies.",
+        "Hook: a bounty system where notorious players become targets — killing them rewards rare drops but earning notoriety yourself makes you hunted.",
+        "Standout: a lore-driven skill tree where unlocking abilities requires finding in-world books, NPCs, and hidden shrines."
+      ]
+    },
+    "Horror":{
+      subs:["Survival Horror","Escape Horror","Puzzle Horror","Multiplayer Horror","Asymmetric Horror","Story Horror","Psychological Horror","Haunted House Horror","Monster Hunt Horror","Deep Sea Horror","Slasher Horror"],
+      descs:[
+        "One or more players are hunted by a monster controlled by another player. Survivors must find clues, craft tools, and escape before time runs out.",
+        "A terrifying escape experience set in a haunted mansion. Players must solve puzzles in near-darkness while a supernatural entity stalks the hallways.",
+        "Players wake up alone in an abandoned facility with no memory. Piecing together what happened while avoiding the thing in the vents is the only goal.",
+        "A slow-burn horror game with almost no jumpscares. The dread comes from environmental storytelling and a monster that behaves unpredictably.",
+        "Up to 8 players are trapped in a location that gets physically smaller every few minutes, forcing them toward the source of danger."
+      ],
+      ideas:[
+        "The twist: the monster gets smarter each round based on where survivors hid last time — the same strategy never works twice.",
+        "Unique hook: a sanity mechanic — the longer you stay in the dark, the more the game actively glitches and deceives your screen.",
+        "Standout: optional lore collectibles that reveal a genuinely disturbing backstory, rewarding brave players who explore.",
+        "Gimmick: the monster is procedurally generated each session — players never know what they're up against until they see it.",
+        "Hook: communication is done in-game via a proximity chat — screaming reveals your location, but silence means no teamwork."
+      ]
+    },
+    "Fighting":{
+      subs:["1v1 Fighting","Battle Royale","Team Brawl","Anime Fighting","Superhero Fighting","Street Fighting","Arena Fighter","Sword Fighting","Mage Duels","Brawl Stars Style","Tag Team Fighting"],
+      descs:[
+        "A fast-paced 1v1 fighting game with a deep combo system, a roster of unique characters, and ranked matchmaking.",
+        "Up to 50 players drop into a shrinking arena. Last one standing wins. Weapons, abilities, and power-ups are scattered across the map.",
+        "Team-based brawler where two squads fight for control of objectives. Unique hero abilities make every match feel different.",
+        "A combo-heavy fighter where every attack can be cancelled into another. Mastering the cancel system separates beginners from veterans.",
+        "An accessible brawler with a surprising skill ceiling. Simple controls hide a deep metagame built around positioning and ability timing."
+      ],
+      ideas:[
+        "Hook: a wall-run and grapple system that turns every arena into a vertical playground for acrobatic combat.",
+        "Twist: your character's power level is determined entirely by how long you've survived — no loadouts, just endurance.",
+        "Unique: a stolen power system where defeating an enemy temporarily grants you their special ability.",
+        "Standout: a momentum system where landing 3 hits in a row grants a visual aura and bonus damage — but getting hit resets it.",
+        "Gimmick: spectators can vote on map hazards mid-match, making the audience part of the chaos."
+      ]
+    },
+    "Survival":{
+      subs:["Island Survival","Zombie Survival","Space Survival","Hunger Games Style","Desert Survival","Arctic Survival","Underwater Survival","Post-Apocalyptic Survival","Raft Survival","Underground Survival","Jungle Survival"],
+      descs:[
+        "Players are stranded on a hostile island with nothing. They must gather resources, build a base, craft weapons, and fend off waves of mutants every night.",
+        "A permadeath survival game on a procedurally changing map. Every life tells a different story — alliances form and betray.",
+        "Survive as long as possible on a drifting raft in the middle of the ocean. Expand your raft, purify water, and fight off sharks.",
+        "A slow and tense survival game where hunger, thirst, and temperature are just as deadly as the enemies.",
+        "A social survival where players must form a community to last — solo players rarely survive past day 3."
+      ],
+      ideas:[
+        "The twist: other players are your biggest threat — trusting someone to watch your base while you explore is a real, dangerous gamble.",
+        "Unique mechanic: a weather system that forces players to adapt — blizzards demand shelter, droughts demand water management.",
+        "Hook: a tiered crafting system where the rarest recipes must be discovered by combining unexpected items.",
+        "Standout: every death leaves a grave with your gear — retrieving it requires returning to where you died.",
+        "Gimmick: a day cycle where daytime is safe for building and exploring, but nighttime brings enemies that can destroy your base."
+      ]
+    },
+    "Racing":{
+      subs:["Car Racing","Kart Racing","Boat Racing","Obstacle Racing","Off-Road Racing","Jetski Racing","Space Racing","Trick Racing","Drift Racing","Time Trial Racing","Underground Street Racing"],
+      descs:[
+        "A high-speed racing game across dozens of tracks in unique biomes. Boost pads, item boxes, and shortcuts reward players who learn the maps.",
+        "Build your custom vehicle from scratch, then race it against others. Better parts mean faster cars — but winning races earns the best parts.",
+        "A chaotic kart racer where weapons and power-ups can flip the standings at any moment, keeping races unpredictable until the finish line.",
+        "A drift-focused racing game where style points earned mid-race translate into nitro boosts. Looking good wins races.",
+        "A racing game with destructible track sections. Players can sabotage the course ahead of rivals by crashing into barriers and walls."
+      ],
+      ideas:[
+        "Unique hook: tracks deform and change mid-race — the route on lap 3 is noticeably different from lap 1.",
+        "Standout: a trick system that rewards stylish overtakes and risky shortcuts with nitro boosts.",
+        "Twist: the last-place player becomes a 'chaos driver' with devastating abilities, making comebacks always possible.",
+        "Gimmick: a weather system that changes track surface conditions mid-race — rain makes corners treacherous.",
+        "Hook: a persistent car damage system where crashes accumulate and visually degrade your vehicle across a tournament."
+      ]
+    },
+    "Tower Defense":{
+      subs:["Classic Tower Defense","Wave Defense","Coop Tower Defense","PvP Tower Defense","Castle Defense","Sci-Fi Defense","Zombie Defense","Elemental Defense","Hero Defense","Dungeon Defense","Endless Tower Defense"],
+      descs:[
+        "Place and upgrade towers to stop waves of increasingly powerful enemies from reaching your base. Dozens of tower types and enemy variants create deep strategy.",
+        "A cooperative tower defense for up to 6 players. Each player controls a region of the map and must coordinate to survive late-game mega-waves.",
+        "A tower defense with RPG elements — your towers level up, unlock new skills, and can be customized with equipment.",
+        "An infinite wave tower defense where the goal isn't to win — it's to survive as long as possible and reach the global leaderboard.",
+        "A tower defense where the path enemies take isn't fixed — they find the shortest route around your towers, making every placement critical."
+      ],
+      ideas:[
+        "The twist: players can spend currency to send harder enemies at their opponents in a PvP tower defense mode.",
+        "Unique hook: each map has a hidden weak point — discovering and defending it is the difference between winning and losing.",
+        "Standout: a hero unit system where a powerful player-controlled character fights alongside automatic towers.",
+        "Gimmick: towers can be combined — placing two specific tower types adjacent to each other creates a fusion tower with a unique ability.",
+        "Hook: boss enemies have randomized abilities each run, so you can't just hard-counter them with the same setup every time."
+      ]
+    },
+    "Adventure":{
+      subs:["Exploration Adventure","Story Adventure","Puzzle Adventure","Platformer Adventure","Open World Adventure","Underwater Adventure","Sky Adventure","Time Travel Adventure","Mystery Adventure","Sci-Fi Adventure","Mythical Adventure"],
+      descs:[
+        "A sweeping adventure across multiple worlds, each with unique mechanics, characters, and secrets to uncover. Story and exploration are equally rewarded.",
+        "Players are dropped into a mysterious open world and given only a compass. Everything else — the story, the goal, the ending — must be discovered.",
+        "A puzzle-adventure where the environment itself is the puzzle. Moving, rotating, and transforming the world reveals paths forward.",
+        "An adventure game built around a single mechanic taken to its absolute extreme — a simple idea explored with surprising depth across 10 handcrafted levels.",
+        "A slow, atmospheric adventure about a small character in a very large world. The scale alone tells the story."
+      ],
+      ideas:[
+        "The hook: the world is built from recycled, recognizable Roblox assets but twisted into something unrecognizable — a love letter to the platform.",
+        "Unique angle: a companion system where the NPC following you has their own moods, opinions, and can unlock areas you can't.",
+        "Twist: the 'ending' can be reached in the first 5 minutes or after 5 hours — both paths are equally valid and lead to different conclusions.",
+        "Standout: a photo mode where finding the best screenshot spots is itself a side quest with real rewards.",
+        "Gimmick: the map is revealed through exploration, but other players' discoveries also fill in parts of your map — the world is collaboratively charted."
+      ]
     }
+  },
 
-    btn.disabled = false;
-    btn.innerHTML = '<span>⚡</span> Generate';
-    isLoading = false;
+  sizes:{
+    small:  { label:"Small",  icon:"🧩", scopes:["Solo dev — estimated 1 to 2 weeks to complete.", "Simple mechanics, one core game loop, minimal assets needed.", "Perfect for a first release or a portfolio starter project."] },
+    medium: { label:"Medium", icon:"🏗️", scopes:["Small team or skilled solo — estimated 3 to 6 weeks.", "Multiple gameplay loops, a handful of maps, basic progression system.", "Solid main project, good for growing a Roblox dev portfolio."] },
+    big:    { label:"Big",    icon:"🏰", scopes:["Dedicated team — estimated 2 to 6 months of active development.", "Full feature set: progression, cosmetics, live events, and post-launch updates.", "High-ambition flagship project requiring good organization and regular updates."] }
+  }
+};
+
+// Compute combos
+let total = 0;
+Object.values(D.genres).forEach(g => { total += g.subs.length * g.descs.length * g.ideas.length; });
+total *= D.prefix.length * D.core.length;
+const fmt = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M+' : n >= 1e3 ? Math.round(n/1e3)+'K+' : n+'';
+document.getElementById('combo-count').textContent = `🎲 ${fmt(total)} Combinations`;
+document.getElementById('counter').innerHTML = `Generates from over <span>${fmt(total)}</span> unique combinations — no two sessions are the same`;
+
+let selectedSize = 'small', history = [], lastIdea = null;
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+
+function setSize(s) {
+  selectedSize = s;
+  document.querySelectorAll('.sz-btn').forEach(b => b.classList.remove('active','small','medium','big'));
+  document.querySelector(`[data-s="${s}"]`).classList.add('active', s);
+}
+
+function setField(id, val, delay) {
+  return new Promise(res => setTimeout(() => {
+    const el = document.getElementById(id);
+    el.className = 'fv rolled'; el.innerHTML = val; res();
+  }, delay));
+}
+
+function makeSzBadge(s) {
+  const sz = D.sizes[s];
+  return `<span class="sz ${s}">${sz.icon} ${sz.label}</span>`;
+}
+
+function makeName() {
+  const usePrefix = Math.random() > 0.28;
+  const useSuffix = Math.random() > 0.55;
+  let n = '';
+  if (usePrefix) n += rnd(D.prefix) + ' ';
+  n += rnd(D.core);
+  if (useSuffix && !usePrefix) n += ' ' + rnd(D.suffix);
+  return n.trim();
+}
+
+async function generate() {
+  const btn = document.getElementById('btn-gen');
+  btn.style.pointerEvents = 'none';
+  btn.innerHTML = '<span>🎲</span> Rolling...';
+
+  const genreKey = rnd(Object.keys(D.genres));
+  const g = D.genres[genreKey];
+  const sub = rnd(g.subs), desc = rnd(g.descs), idea = rnd(g.ideas);
+  const name = makeName();
+  const scope = rnd(D.sizes[selectedSize].scopes);
+
+  lastIdea = { name, genre: genreKey, subgenre: sub, size: selectedSize, desc, idea };
+
+  await setField('f-name', name, 0);
+  await setField('f-genre', genreKey, 90);
+  await setField('f-subgenre', sub, 180);
+  await setField('f-size', makeSzBadge(selectedSize), 270);
+  await setField('f-desc', `${desc} <span style="color:#333;font-size:.8rem">(${scope})</span>`, 380);
+  await setField('f-idea', idea, 510);
+
+  if (history.length === 0 || history[0].name !== name) {
+    history.unshift(lastIdea);
+    if (history.length > 6) history.pop();
+    renderHistory();
   }
 
-  function renderHistory() {
-    const section = document.getElementById('history-section');
-    const list = document.getElementById('history-list');
-    if (history.length === 0) { section.style.display = 'none'; return; }
-    section.style.display = 'block';
-    list.innerHTML = history.slice(1).map((item, i) => `
-      <div class="history-item" onclick="loadHistory(${i+1})">
-        <div>
-          <div class="history-item-name">${item.name}</div>
-          <div class="history-item-meta">${item.genre} · ${item.subgenre}</div>
-        </div>
-        <span class="size-badge ${item.size}" style="font-size:.75rem;padding:2px 10px;">${item.size.charAt(0).toUpperCase()+item.size.slice(1)}</span>
-      </div>
-    `).join('');
-  }
+  btn.style.pointerEvents = '';
+  btn.innerHTML = '<span>⚡</span> Generate';
+}
 
-  function loadHistory(idx) {
-    const item = history[idx];
-    if (!item) return;
-    setField('f-name', item.name);
-    setField('f-genre', item.genre);
-    setField('f-subgenre', item.subgenre);
-    setField('f-size', makeSizeBadge(item.size));
-    setField('f-desc', item.description);
-    setField('f-idea', item.idea);
-  }
+function renderHistory() {
+  const wrap = document.getElementById('history-wrap');
+  const list = document.getElementById('history-list');
+  const items = history.slice(1);
+  if (!items.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  list.innerHTML = items.map((it, i) => `
+    <div class="h-item" onclick="loadHistory(${i+1})">
+      <div><div class="h-name">${it.name}</div><div class="h-meta">${it.genre} · ${it.subgenre}</div></div>
+      <span class="sz ${it.size}" style="font-size:.7rem;padding:2px 10px">${D.sizes[it.size].icon} ${D.sizes[it.size].label}</span>
+    </div>`).join('');
+}
+
+function loadHistory(idx) {
+  const it = history[idx]; if (!it) return;
+  lastIdea = it;
+  const scope = rnd(D.sizes[it.size].scopes);
+  setField('f-name', it.name, 0); setField('f-genre', it.genre, 0);
+  setField('f-subgenre', it.subgenre, 0); setField('f-size', makeSzBadge(it.size), 0);
+  setField('f-desc', `${it.desc} <span style="color:#333;font-size:.8rem">(${scope})</span>`, 0);
+  setField('f-idea', it.idea, 0);
+}
+
+function copyIdea() {
+  if (!lastIdea) return;
+  const t = `🎮 ${lastIdea.name}\nGenre: ${lastIdea.genre}\nSubgenre: ${lastIdea.subgenre}\nSize: ${D.sizes[lastIdea.size].label}\n\n${lastIdea.desc}\n\n💡 ${lastIdea.idea}`;
+  navigator.clipboard.writeText(t).then(() => {
+    const b = document.getElementById('copy-btn');
+    b.textContent = '✓ Copied!'; b.classList.add('copied');
+    setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('copied'); }, 2000);
+  });
+}
 </script>
 </body>
 </html>
